@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongodb-deployment
-  #namespace: mongo
+  namespace: mongo
   labels:
     app: mongodb
 spec:
@@ -36,11 +36,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mongodb-service
-  #namespace: mongo
+  namespace: mongo
 spec:
   selector:
     app: mongodb
-  type: ClusterIP #No need to specify this as it is the default
+  type: ClusterIP #Really no need to specify this as it is the default
   ports:
     - protocol: TCP
       port: 27017

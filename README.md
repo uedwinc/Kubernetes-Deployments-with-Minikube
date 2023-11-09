@@ -16,41 +16,41 @@ This project involves:
 
 2. Install minikube (https://minikube.sigs.k8s.io/docs/start/) with chocolatey (https://community.chocolatey.org/packages?q=minikube)
 
-```
-choco install minikube
-```
+    ```
+    choco install minikube
+    ```
 
 3. Then do ```minkube start``` (use `minkube start --help` to see customization options)
 
-```
-minikube start --driver=virtualbox --cpus=2 --memory=2g
-```
+    ```
+    minikube start --driver=virtualbox --cpus=2 --memory=2g
+    ```
 
 - To ignore virtual machine check, use:
 
-```
-minikube start --driver=virtualbox --cpus=2 --memory=2g --no-vtx-check
-```
+    ```
+    minikube start --driver=virtualbox --cpus=2 --memory=2g --no-vtx-check
+    ```
 
 4. Confirm minikube and kubectl installation:
 
-`minikube version`
+    `minikube version`
 
-`kubectl version`
+    `kubectl version`
 
 ![minikube installed]()
 
 5. kubectl crud (create read update delete) operations
 
-`kubectl get svc`
+    `kubectl get svc`
 
-`kubectl get replicaset`
+    `kubectl get replicaset`
 
-`kubectl get deployment`
+    `kubectl get deployment`
 
-`kubectl get nodes`
+    `kubectl get nodes`
 
-`kubectl get pods`
+    `kubectl get pods`
 
 ![kubectl cmds]()
 
@@ -119,17 +119,23 @@ minikube start --driver=virtualbox --cpus=2 --memory=2g --no-vtx-check
 
 - Contains base64 encripted key for mongodb defined in the environmental variable of the deployment file
     + Open git bash:
-        + Do `echo -n 'specify-username' | base64`
-        + Do `echo -n 'specify-password' | base64`
+        + Do `echo -n specify-username | base64`
+        + Do `echo -n specify-password | base64`
     + the encrypted values generated here are passed in as username and password in the mongo-secret.yaml file.
+
+- First, create the namespace defined in the yaml file (I will use 'mongo' as namespace)
+
+    ```
+    kubectl create ns mongo
+    ```
 
 - Run the secrets file
 
-```
-kubectl apply -f mongo-secret.yaml
-```
+    ```
+    kubectl apply -f mongo-secret.yaml
+    ```
 
-- Do `kubectl get secret` to confirm
+- Do `kubectl get secret -n mongo` to confirm
 
 2. Deployment and Service file
 
@@ -144,15 +150,23 @@ kubectl apply -f mongo-secret.yaml
 kubectl apply -f mongo-deployment.yaml
 ```
 
+![apply mongo]()
+
 - Confirm deployments
 
-    `kubectl get deployment`
+    `kubectl get deployment -n mongo`
 
-    `kubectl get svc`
+    `kubectl get svc -n mongo`
 
-    `kubectl describe svc service-name`
+![depl and svc]()
 
-    `kubectl get pods -o wide`
+    `kubectl describe svc mongodb-service -n mongo`
+
+![describe svc]()
+
+    `kubectl get pods -n mongo -o wide`
+
+![wide]()
 
 ## Mongo-Express Deployment
 
@@ -164,11 +178,13 @@ kubectl apply -f mongo-deployment.yaml
 
 - Start the configmap process
 
-```
-kubectl apply -f mongo-configmap.yaml
-```
+    ```
+    kubectl apply -f mongo-configmap.yaml
+    ```
 
-- Do `kubectl get configmap` to confirm
+- Do `kubectl get configmap -n mongo` to confirm
+
+![config]()
 
 2. Deployment and Service file
 
@@ -176,21 +192,25 @@ kubectl apply -f mongo-configmap.yaml
 
 - Run the file
 
-```
-kubectl apply -f mongo-express.yaml
-```
+    ```
+    kubectl apply -f mongo-express.yaml
+    ```
+
+![mx apply]()
 
 - Confirm
 
-    `kubectl get pods`
+    `kubectl get pods -n mongo`
 
-    `kubectl get svc`
+    `kubectl get svc -n mongo`
 
-    `kubectl describe svc mongo-express-service`
+    `kubectl describe svc mongo-express-service -n mongo`
+
+![mg express]()
 
 3. External Access
 
-- Do `minikube service mongo-express-service`
+- Do `minikube service mongo-express-service -n mongo`
 
 - This will open up your browser to mongo-express
 
@@ -205,7 +225,7 @@ kubectl apply -f mongo-express.yaml
 
 - Do `kubectl get ns` to see available namespaces (ns = namespace)
     + Namespaces helps to isolate resources within a cluster
-    + So, it is important to have created mongo-express in the ingress namespace
+    + So, it is important to have created mongo-express in the same namespace you will create ingress in
     + `kubectl get all -n name-of-namespace` will tell you which services were created inside the namespace.
 
 - To enable / create an ingress namespace, use `minikube addons enable ingress`
@@ -216,7 +236,7 @@ kubectl apply -f mongo-express.yaml
 kubectl apply -f mongo-express-ingress.yaml
 ```
 
-- Do `kubectl get ingress` to confirm
+- Do `kubectl get ingress -n mongo` to confirm
 
 3. Inorder to access the host, edit the hosts file
 

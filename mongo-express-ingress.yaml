@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1 #See documentation at https://kubernetes.io/doc
 kind: Ingress
 metadata:
   name: mongo-express-ingress
-  namespace: default #Or whichever namespace your services were created in.
+  namespace: mongo #Or whichever namespace your services were created in.
 spec:
   rules:
     - host: mongo-express.com

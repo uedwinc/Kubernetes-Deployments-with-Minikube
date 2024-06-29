@@ -16,98 +16,117 @@ This project involves:
 
 2. Install minikube (https://minikube.sigs.k8s.io/docs/start/) with chocolatey (https://community.chocolatey.org/packages?q=minikube)
 
-    ```
-    choco install minikube
-    ```
+```sh
+choco install minikube
+```
 
 3. Then do ```minkube start``` (use `minkube start --help` to see customization options)
 
-    ```
-    minikube start --driver=virtualbox --cpus=2 --memory=2g
-    ```
+```sh
+minikube start --driver=virtualbox --cpus=2 --memory=2g
+```
 
 - To ignore virtual machine check, use:
 
-    ```
-    minikube start --driver=virtualbox --cpus=2 --memory=2g --no-vtx-check
-    ```
+```sh
+minikube start --driver=virtualbox --cpus=2 --memory=2g --no-vtx-check
+```
 
 4. Confirm minikube and kubectl installation:
 
-    `minikube version`
+```sh
+minikube version
 
-    `kubectl version`
+kubectl version
+```
 
-![minikube installed]()
+![minikube installed](./images/minikube%20installed.png)
 
 5. kubectl crud (create read update delete) operations
 
-    `kubectl get svc`
+```sh
+kubectl get svc
 
-    `kubectl get replicaset`
+kubectl get replicaset
 
-    `kubectl get deployment`
+kubectl get deployment
 
-    `kubectl get nodes`
+kubectl get nodes
 
-    `kubectl get pods`
+kubectl get pods
+```
 
-![kubectl cmds]()
+![kubectl cmds](./images/kubectl%20cmds.png)
 
 - To create deployment:
 
-    `kubectl create deploy nginx-depl --image=nginx`
+```sh
+kubectl create deploy nginx-depl --image=nginx
+```
 
-![ngx depl img]()
+![ngx depl img](./images/ngx%20depl%20img.png)
 
 - To check / edit deployment file
 
-    `kubectl edit deploy nginx-depl`
+```sh
+kubectl edit deploy nginx-depl
+```
 
 - To inspect your pods or troubleshoot
 
-    `kubectl logs pod-name`
+```sh
+kubectl logs pod-name
 
-    `kubectl describe pod pod-name`
+kubectl describe pod pod-name
 
-    `kubectl describe deploy deployment-name`
+kubectl describe deploy deployment-name
 
-    `kubectl describe service name-of-service`
+kubectl describe service name-of-service
+```
 
 - To get more info about pods
 
-    `kubectl get pods -o wide`
+```sh
+kubectl get pods -o wide
+```
 
-![0 wide]()
+![0 wide](./images/o%20wide.png)
 
 - To access or log into your pods
 
-    `kubectl exec -it name-of-pod -- bin/bash`
+```sh
+kubectl exec -it name-of-pod -- bin/bash
+```
 
-![exec]()
+![exec](./images/exec.png)
 
 - To delete deployment
 
-    `kubectl delete deploy name-of-deployment`
+```sh
+kubectl delete deploy name-of-deployment
+```
 
-![kube delete]()
+![kube delete](./images/kube%20delete.png)
 
-### Creating Deployment Using a yaml file
+## Creating Deployment Using a yaml file
 
 - To create deployment and service, you have to apply the deployment file and the service file
 
-    `kubectl apply -f path-to-file`
+```sh
+kubectl apply -f path-to-file
+```
 
-![apply file]()
+![apply file](./images/apply%20file.png)
 
-![k svc]()
+![k svc](./images/k%20svc.png)
 
 - To delete deployment created with file (delete with both deployment file and service file)
 
-    `kubectl delete -f path-to-deploy-file`
+```sh
+kubectl delete -f path-to-deploy-file
+```
 
 ---
-
 
 ## Mongodb Deployment on Minikube
 
